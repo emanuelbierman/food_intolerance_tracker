@@ -6,7 +6,7 @@
       <% @user_foods_grouped.each do |food| %>
         <li class="list-group-item d-flex justify-content-between align-items-center">
           <%= link_to food.name, user_food_path(@user, food) %>
-          <span class="badge badge-primary badge-pill"><%= food.days.count %></span>
+          <span class="food-count badge badge-primary badge-pill"></span>
         </li>
       <% end %>
     </ul>

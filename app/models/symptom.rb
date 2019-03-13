@@ -9,8 +9,7 @@ class Symptom < ActiveRecord::Base
   after_find :update_days_count
 
   def update_days_count
-    self.days_count = self.days.count unless self.days_count.nil?
-  end
+    self.days_count = self.days.uniq.count ? self.days.uniq.count : "This symptom has no days yet."
 
   def self.symptoms_by_days_count(user_id)
     symptoms = self.joins(:days).where(days: { user_id: user_id})

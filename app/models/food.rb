@@ -9,7 +9,8 @@ class Food < ActiveRecord::Base
   after_find :update_days_count
 
   def update_days_count
-    self.days_count = self.days.uniq.count unless self.days_count.nil?
+    self.days_count = self.days.uniq.count ? self.days.uniq.count : "This food has no days yet."
+    # self.days_count = self.days.uniq.count unless self.days_count.nil?
   end
 
   def self.foods_by_days_count(user_id)
