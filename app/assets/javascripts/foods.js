@@ -1,16 +1,17 @@
-$(function() {
-  getFoods();
-});
 
-function getFoods() {
+function getFoods(user_id) {
   $.ajax({
-    url: `/users/1/foods`,
+    // need to grab this user id param
+    url: `/users/${user_id}/foods`,
     method: 'get',
     dataType: 'json'
   }).done(function(response) {
     foods = response.data.map(function(element) {
       return new Food(element.attributes.name, element.attributes["days-count"]);
     });
+    $("a.food-name").map(function(index) {
+      return this.innerHTML = foods[index].name
+    })
     $("span.food-count").append(function(index) {
       return foods[index].days_count;
     });

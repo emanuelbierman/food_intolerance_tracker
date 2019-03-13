@@ -24,6 +24,7 @@ private
 
   def require_user
     @user = User.find_by(id: params[:user_id])
+    @id = params[:id]
     if @user
       if @user != current_user
         redirect_to user_path(current_user), alert: "You do not have permission to access this page."
