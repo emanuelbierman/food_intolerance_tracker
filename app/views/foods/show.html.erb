@@ -7,8 +7,8 @@
           When you ate <%= @food.name %>, these were your symptoms:
         </h5>
         <div class="card-body">
-          <h6 class="card-subtitle mb-2 text-muted">
-            Date: <%= day.month_day_year %>
+          <h6 class="day-mdy card-subtitle mb-2 text-muted">
+            Date:
           </h6>
           <p class="card-text">
             <% day.symptoms.each do |symptom| %>
@@ -27,8 +27,8 @@
             On the next day, these were your symptoms:
           </h5>
           <div class="card-body">
-            <h6 class="card-subtitle mb-2 text-muted">
-              Date: <%= day.next_day.month_day_year %>
+            <h6 class="day-mdy card-subtitle mb-2 text-muted">
+              Date:
             </h6>
             <p class="card-text">
               <% day.next_day_symptoms.each do |symptom| %>
@@ -48,8 +48,8 @@
             Two days later, these were your symptoms:
           </h5>
           <div class="card-body">
-            <h6 class="card-subtitle mb-2 text-muted">
-              Date: <%= day.two_days_later.month_day_year %>
+            <h6 class="day-mdy card-subtitle mb-2 text-muted">
+              Date:
             </h6>
             <p class="card-text">
               <% day.two_days_later_symptoms.each do |symptom| %>
@@ -66,3 +66,9 @@
     </div>
   <% end %>
 </div>
+
+<script type="text/javascript">
+$(function() {
+  getFoodDays(<%= @id %>, <%= @food.id %>);
+});
+</script>

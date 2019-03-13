@@ -1,8 +1,24 @@
 
-function getFoods(user_id) {
+function getFoodDays(userId, foodId) {
   $.ajax({
     // need to grab this user id param
-    url: `/users/${user_id}/foods`,
+    url: `/users/${userId}/foods/${foodId}`,
+    method: 'get',
+    dataType: 'json'
+  }).done(function(response) {
+    foodDays = response.data.map(function(element) {
+      return new Day(element.attributes["month-day-year"]);
+    });
+    $(".day-mdy").map(function(index) {
+      return this.innerText += ` ${foodDays[index].monthDayYear}`
+    });
+  });
+}
+
+function getFoods(userId) {
+  $.ajax({
+    // need to grab this user id param
+    url: `/users/${userId}/foods`,
     method: 'get',
     dataType: 'json'
   }).done(function(response) {
@@ -13,12 +29,16 @@ function getFoods(user_id) {
       return this.innerHTML = foods[index].name
     })
     $("span.food-count").append(function(index) {
-      return foods[index].days_count;
+      return foods[index].daysCount;
     });
   });
 }
 
-function Food(name, days_count) {
+function Food(name, daysCount) {
   this.name = name;
-  this.days_count = days_count;
+  this.daysCount = daysCount;
+};
+
+function Day(monthDayYear) {
+  this.monthDayYear = monthDayYear;
 };
