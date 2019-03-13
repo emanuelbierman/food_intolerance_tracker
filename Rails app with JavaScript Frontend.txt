@@ -5,7 +5,7 @@ Project Specs:
 * Must translate the JSON responses into Javascript Model Objects using either ES6 class or constructor syntax.
 * Must render at least one index page (index resource - 'list of things') via JavaScript and an Active Model Serialization JSON Backend. - food/symptoms
 * Must render at least one show page (show resource - 'one specific thing') via JavaScript and an Active Model Serialization JSON Backend. - food/symptoms
-* Your Rails application must reveal at least one `has-many` relationship through JSON that is then rendered to the page. - food has-many days
+* Your Rails application must reveal at least one `has-many` relationship through JSON that is then rendered to the page. - food has-many days? certainly food has_many symptoms
 * Must use your Rails application to render a form for creating a resource that is submitted dynamically through JavaScript. - days_food form
 * At least one of the JS Model Objects must have a method on the prototype - Food.days_count()
 

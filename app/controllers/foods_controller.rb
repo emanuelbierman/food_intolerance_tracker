@@ -3,7 +3,10 @@ class FoodsController < ApplicationController
 
   def index
     @user_foods_grouped = Food.foods_by_days_count(current_user.id)
-    render json: @user_foods_grouped, status: 200
+    respond_to do |format|
+      format.html { render 'index' }
+      format.json { render json: @user_foods_grouped, status: 200 }
+    end
   end
 
   def show
