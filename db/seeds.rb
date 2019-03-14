@@ -7,20 +7,59 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 user = User.create(username: "sample user", password: "password")
-date = Time.now.strftime("%d")
-day = Day.create(date: date, user_id: user.id)
+today = Time.now.strftime("%d")
+day = Day.create(date: today, user_id: user.id)
+
 food = Food.create(name: "pizza")
 days_food = DaysFood.create(day_id: day.id, food_id: food.id, serving: 1, comments: "peer-pressured into eating at birthday party")
+
 food2 = Food.create(name: "ice cream")
-days_food2 = DaysFood.create(day_id: day.id, food_id: food2.id, serving: 2)
+days_food2 = DaysFood.create(day_id: day.id, food_id: food2.id, serving: 2, comments: "two big scoops")
+
+food3 = Food.create(name: "coffee")
+days_food3 = DaysFood.create(day_id: day.id, food_id: food3.id, serving: 1, comments: "one cup")
+
+food4 = Food.create(name: "chocolate fondu")
+days_food4 = DaysFood.create(day_id: day.id, food_id: food4.id, serving: 1)
+
+food5 = Food.create(name: "strawberries")
+days_food5 = DaysFood.create(day_id: day.id, food_id: food5.id, serving: 5, comments: "for the chocolate fondu")
+
 symptom = Symptom.create(description: "mucus")
-days_symptom = DaysSymptom.create(day_id: day.id, symptom_id: symptom.id, frequency: 1, comments: "mucus after cheese")
+days_symptom = DaysSymptom.create(day_id: day.id, symptom_id: symptom.id, frequency: 1, comments: "mucus after lunch")
+
+symptom2 = Symptom.create(description: "runny nose")
+days_symptom2 = DaysSymptom.create(day_id: day.id, symptom_id: symptom2.id, frequency: 2)
+
+symptom3 = Symptom.create(description: "diarrhea")
+days_symptom3 = DaysSymptom.create(day_id: day.id, symptom_id: symptom3.id, frequency: 1, comments: "what did I eat yesterday?")
+
+symptom4 = Symptom.create(description: "mucus")
+days_symptom4 = DaysSymptom.create(day_id: day.id, symptom_id: symptom4.id, frequency: 1, comments: "more mucus in the evening")
+
+symptom5 = Symptom.create(description: "headache")
+days_symptom5 = DaysSymptom.create(day_id: day.id, symptom_id: symptom5.id, frequency: 1, comments: "only one cup of coffee today")
+
 food.save
 food2.save
-day.save
+food3.save
+food4.save
+food5.save
 days_food.save
+days_food2.save
+days_food3.save
+days_food4.save
+days_food5.save
 symptom.save
+symptom2.save
+symptom3.save
+symptom4.save
+symptom5.save
 days_symptom.save
+days_symptom2.save
+days_symptom3.save
+days_symptom4.save
+days_symptom5.save
 
 # food1 = Food.create(name: "pretzels", serving: 2)
 # food2 = Food.create(name: "chicken sausage", serving: 2)
