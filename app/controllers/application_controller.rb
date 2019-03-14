@@ -24,6 +24,7 @@ private
 
   def require_user
     @user = User.find_by(id: params[:user_id])
+    # the @id instance variable is for AJAX requests that need a user id to access nested resources
     @id = params[:id]
     if @user
       if @user != current_user

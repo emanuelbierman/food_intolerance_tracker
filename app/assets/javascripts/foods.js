@@ -12,7 +12,8 @@ function getFoodDays(userId, foodId) {
     $(".day-mdy").map(function(index) {
       return this.innerText = `Date: ${foodDays[index].monthDayYear}`
     });
-    $("#js-next").value = foodId;
+    $("button#js-next").data("food", foodId);
+    console.log("foodId: " + foodId);
   });
 }
 

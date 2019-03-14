@@ -2,7 +2,7 @@
   <h3>
     <%= @food.name.split.map(&:capitalize).join(' ') %>
     <span class="badge">
-      <button id="js-next" value="<%= @food.id %>">next food -></button>
+      <button id="js-next" data-user="<%= @id %>" data-food="<%= @food.id %>">next food -></button>
     </span>
   </h3>
   <% @food_days.each do |day| %>
@@ -71,11 +71,12 @@
 
 <script type="text/javascript">
 $(function() {
-  let food_id = this.value;
-  getFoodDays(<%= @id %>, food_id);
-  $("#js-next").on('click', function() {
+  const user_id = $("button#js-next").data("user");
+  let food_id = $("button#js-next").data("food");
+  getFoodDays(user_id, food_id);
+  $("button#js-next").on('click', function() {
     food_id += 1;
-    getFoodDays(<%= @id %>, food_id);
+    getFoodDays(user_id, food_id);
   })
 });
 </script>
