@@ -1,5 +1,10 @@
 <div class="container">
-  <h3><%= @food.name.split.map(&:capitalize).join(' ') %></h3>
+  <h3>
+    <%= @food.name.split.map(&:capitalize).join(' ') %>
+    <span class="badge">
+      <button id="js-next" value="<%= @food.id %>">next food -></button>
+    </span>
+  </h3>
   <% @food_days.each do |day| %>
     <div class="row">
       <div class="card" style="width: 18rem;">
@@ -8,7 +13,6 @@
         </h5>
         <div class="card-body">
           <h6 class="day-mdy card-subtitle mb-2 text-muted">
-            Date:
           </h6>
           <p class="card-text">
             <% day.symptoms.each do |symptom| %>
@@ -28,7 +32,6 @@
           </h5>
           <div class="card-body">
             <h6 class="day-mdy card-subtitle mb-2 text-muted">
-              Date:
             </h6>
             <p class="card-text">
               <% day.next_day_symptoms.each do |symptom| %>
@@ -49,7 +52,6 @@
           </h5>
           <div class="card-body">
             <h6 class="day-mdy card-subtitle mb-2 text-muted">
-              Date:
             </h6>
             <p class="card-text">
               <% day.two_days_later_symptoms.each do |symptom| %>
@@ -69,6 +71,11 @@
 
 <script type="text/javascript">
 $(function() {
-  getFoodDays(<%= @id %>, <%= @food.id %>);
+  let food_id = this.value;
+  getFoodDays(<%= @id %>, food_id);
+  $("#js-next").on('click', function() {
+    food_id += 1;
+    getFoodDays(<%= @id %>, food_id);
+  })
 });
 </script>

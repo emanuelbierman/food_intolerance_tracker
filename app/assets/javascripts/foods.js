@@ -10,8 +10,9 @@ function getFoodDays(userId, foodId) {
       return new Day(element.attributes["month-day-year"]);
     });
     $(".day-mdy").map(function(index) {
-      return this.innerText += ` ${foodDays[index].monthDayYear}`
+      return this.innerText = `Date: ${foodDays[index].monthDayYear}`
     });
+    $("#js-next").value = foodId;
   });
 }
 
