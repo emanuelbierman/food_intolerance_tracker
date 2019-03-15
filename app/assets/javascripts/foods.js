@@ -7,15 +7,25 @@ function getFoodDays(userId, foodId) {
     dataType: 'json'
   }).done(function(response) {
     const food = new Food(response.data.attributes.name, response.data.attributes["days-count"]);
-
-    for (var i = 0; i < response.included.length; i++) {
-      let day = new Day(response.included[i].attributes["month-day-year"]);
+    const included = response.included;
+    for (var i = 0; i < included.length; i++) {
+      let day = new Day(included[i].attributes["month-day-year"]);
       food.days.push(day);
+      for (var ii = 0; ii < included[i].attributes.symptoms.length; ii++) {
+        let symptom = new Symptom(included[i].attributes.symptoms[ii].description, included[i].attributes.symptoms[ii]["days_count"]);
+        // why is it days_count here, but days-count in line 9?
+        day.symptoms.push(symptom);
+      }
     }
-    // grab the symptoms for that day in an array
-    // let symptoms = this.attributes.symptoms.map(function(i, el) {
-    //   new Symptom(el.description, element["days-count"]);
+    console.log(food);
+    // $.each(food.days, function (i,v) {
+    //   v.attributes.symptoms.map(function(i, el) {
+    //     new Symptom(el.description, element["days-count"]);
+    //
+    //   })
     // })
+    // grab the symptoms for that day in an array
+
     // push them into a nested array for all symptoms
     // food.days.map((d, i) => d.symptoms.push(symptoms[i]));
 
