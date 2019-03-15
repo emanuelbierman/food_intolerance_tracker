@@ -17,23 +17,16 @@ function getFoodDays(userId, foodId) {
         day.symptoms.push(symptom);
       }
     }
-    console.log(food);
-    // $.each(food.days, function (i,v) {
-    //   v.attributes.symptoms.map(function(i, el) {
-    //     new Symptom(el.description, element["days-count"]);
-    //
-    //   })
-    // })
-    // grab the symptoms for that day in an array
 
-    // push them into a nested array for all symptoms
-    // food.days.map((d, i) => d.symptoms.push(symptoms[i]));
-
-    // $(".day-mdy").map(function(index) {
-    //   return this.innerText = `Date: ${food.days[index].monthDayYear}`
-    // });
-    // $("button#js-next").data("food", foodId);
+    $(".day-mdy").map(function(i) {
+      return this.innerText = `Date: ${food.days[i].monthDayYear}`
+    });
+    // increment the button id
+    $("button#js-next").data("food", foodId + 1);
     // console.log("foodId: " + foodId);
+    // map these:
+    $("span#food-name");
+    $("a.symptom-description");
   });
 };
 

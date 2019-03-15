@@ -1,6 +1,7 @@
 <div class="container">
   <h3>
     <%= @food.name.split.map(&:capitalize).join(' ') %>
+    <span id="food-name"></span>
     <span class="badge">
       <button id="js-next" data-user="<%= @id %>" data-food="<%= @food.id %>">next food -></button>
     </span>
@@ -9,7 +10,7 @@
     <div class="row">
       <div class="card" style="width: 18rem;">
         <h5 class="card-title">
-          When you ate <%= @food.name %>, these were your symptoms:
+          When you ate <span id="food-name"><%= @food.name %></span>, these were your symptoms:
         </h5>
         <div class="card-body">
           <h6 class="day-mdy card-subtitle mb-2 text-muted">
@@ -18,7 +19,7 @@
             <% day.symptoms.each do |symptom| %>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                  <%= link_to symptom.description, user_symptom_path(current_user, symptom) %>
+                  <%= link_to symptom.description, user_symptom_path(current_user, symptom), class: "symptom-description" %>
                 </li>
               </ul>
             <% end %>
@@ -74,8 +75,8 @@ $(function() {
   const user_id = $("button#js-next").data("user");
   let food_id = $("button#js-next").data("food");
   getFoodDays(user_id, food_id);
+  food_id += 1;
   $("button#js-next").on('click', function() {
-    food_id += 1;
     getFoodDays(user_id, food_id);
   })
 });
