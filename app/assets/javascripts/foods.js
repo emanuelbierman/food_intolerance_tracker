@@ -6,9 +6,17 @@ function getFoodDays(userId, foodId) {
     method: 'get',
     dataType: 'json'
   }).done(function(response) {
-    foodDays = response.data.map(function(element) {
-      return new Day(element.attributes["month-day-year"]);
+    const food = new Food(response.data.attributes.name, response.data.attributes["days-count"]);
+    food.days = response.included.map(function(el) {
+      let day = new Day(el.attributes["month-day-year"]);
+      // grab the symptoms for that day in an array
+      let symptoms = el.attributes.symptoms.map(function(element) {
+        new Symptom(element.description, element["days-count"]);
+      })
+      // push them into a nested array for all symptoms
+      day.symptoms.push(symptoms);
     });
+
     $(".day-mdy").map(function(index) {
       return this.innerText = `Date: ${foodDays[index].monthDayYear}`
     });
@@ -36,11 +44,18 @@ function getFoods(userId) {
   });
 }
 
-function Food(name, daysCount) {
+function Food(name, daysCount, days) {
   this.name = name;
   this.daysCount = daysCount;
+  this.days = days;
 };
 
-function Day(monthDayYear) {
+function Day(monthDayYear, symptoms) {
   this.monthDayYear = monthDayYear;
+  this.symptoms = symptoms;
 };
+
+function Symptom(description, daysCount) {
+  this.description = description;
+  this.daysCount = daysCount;
+}

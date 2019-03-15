@@ -11,10 +11,9 @@ class FoodsController < ApplicationController
 
   def show
     if @food
-      @food_days = @food.days
       respond_to do |format|
         format.html { render 'show' }
-        format.json { render json: @food_days, status: 200 }
+        format.json { render json: @food, include: 'days' }
       end
     else
       redirect_to user_foods_path(current_user), alert: "Your food was not found."
