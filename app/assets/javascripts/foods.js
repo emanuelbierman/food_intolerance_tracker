@@ -7,23 +7,25 @@ function getFoodDays(userId, foodId) {
     dataType: 'json'
   }).done(function(response) {
     const food = new Food(response.data.attributes.name, response.data.attributes["days-count"]);
-    food.days = response.included.map(function(el) {
-      let day = new Day(el.attributes["month-day-year"]);
-      // grab the symptoms for that day in an array
-      let symptoms = el.attributes.symptoms.map(function(element) {
-        new Symptom(element.description, element["days-count"]);
-      })
-      // push them into a nested array for all symptoms
-      day.symptoms.push(symptoms);
-    });
 
-    $(".day-mdy").map(function(index) {
-      return this.innerText = `Date: ${foodDays[index].monthDayYear}`
-    });
-    $("button#js-next").data("food", foodId);
-    console.log("foodId: " + foodId);
+    for (var i = 0; i < response.included.length; i++) {
+      let day = new Day(response.included[i].attributes["month-day-year"]);
+      food.days.push(day);
+    }
+    // grab the symptoms for that day in an array
+    // let symptoms = this.attributes.symptoms.map(function(i, el) {
+    //   new Symptom(el.description, element["days-count"]);
+    // })
+    // push them into a nested array for all symptoms
+    // food.days.map((d, i) => d.symptoms.push(symptoms[i]));
+
+    // $(".day-mdy").map(function(index) {
+    //   return this.innerText = `Date: ${food.days[index].monthDayYear}`
+    // });
+    // $("button#js-next").data("food", foodId);
+    // console.log("foodId: " + foodId);
   });
-}
+};
 
 function getFoods(userId) {
   $.ajax({
@@ -44,15 +46,15 @@ function getFoods(userId) {
   });
 }
 
-function Food(name, daysCount, days) {
+function Food(name, daysCount) {
   this.name = name;
   this.daysCount = daysCount;
-  this.days = days;
+  this.days = [];
 };
 
-function Day(monthDayYear, symptoms) {
+function Day(monthDayYear) {
   this.monthDayYear = monthDayYear;
-  this.symptoms = symptoms;
+  this.symptoms = [];
 };
 
 function Symptom(description, daysCount) {
