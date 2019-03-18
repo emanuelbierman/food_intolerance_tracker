@@ -20,15 +20,20 @@ function getFoodDays(userId, foodId) {
     }
 
     $(".day-mdy").map(function(i) {
+      // why is this returning undefined? check food.days array
       // return this.innerText = `Date: ${food.days[i].monthDayYear}`
     });
+
     // increment the button id
     $("button#js-next").data("food", foodId + 1);
-    // console.log("foodId: " + foodId);
-    // map these:
+
     $("span#food-name").map(function() {
       return this.innerText = `${food.name}`;
     });
+    $("span#food-title").map(function(i) {
+      return this.innerText = `${food.name[0].toUpperCase()}` + `${food.name.slice(1).toLowerCase()}`;
+    });
+
     $("a.symptom-description").map(function(i) {
       // return this.innerText = `${food.days[i].symptoms}`
     });
