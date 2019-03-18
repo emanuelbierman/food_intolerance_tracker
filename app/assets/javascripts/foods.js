@@ -10,7 +10,7 @@ function getFoodDays(userId, foodId) {
 
     const included = response.included;
     for (var i = 0; i < included.length; i++) {
-      let day = new Day(included[i].attributes["month-day-year"]);
+      let day = new Day(included[i].id, included[i].attributes["month-day-year"]);
       food.days.push(day);
       for (var ii = 0; ii < included[i].attributes.symptoms.length; ii++) {
         let symptom = new Symptom(included[i].attributes.symptoms[ii].description, included[i].attributes.symptoms[ii]["days_count"]);
@@ -34,9 +34,13 @@ function getFoodDays(userId, foodId) {
       return this.innerText = `${food.name[0].toUpperCase()}` + `${food.name.slice(1).toLowerCase()}`;
     });
 
-    $("a.symptom-description").map(function(i) {
-      // return this.innerText = `${food.days[i].symptoms}`
-    });
+    for (var i = 0; i < food.days.length; i++) {
+      // find all symptom descriptions within the current iteration of day
+      let symptoms = $(`.day-${food.days[i].id}`).find("a.symptom-description");
+      symptoms.map(function(ii) {
+        return this.innerText = `${food.days[i].symptoms[ii].description}`
+      });
+    }
   });
 };
 
@@ -65,7 +69,8 @@ function Food(name, daysCount) {
   this.days = [];
 };
 
-function Day(monthDayYear) {
+function Day(id, monthDayYear) {
+  this.id = id;
   this.monthDayYear = monthDayYear;
   this.symptoms = [];
 };

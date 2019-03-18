@@ -9,7 +9,7 @@
   </h3>
   <% @food.days.each do |day| %>
     <div class="row">
-      <div class="card" style="width: 18rem;">
+      <div class="day-<%=day.id%> card" style="width: 18rem;">
         <h5 class="card-title">
           When you ate <span id="food-name"><%= @food.name %></span>, these were your symptoms:
         </h5>
@@ -19,7 +19,7 @@
           <p class="card-text">
             <% day.symptoms.each do |symptom| %>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">
+                <li class="symptom-<%=symptom.id%> list-group-item">
                   <%= link_to symptom.description, user_symptom_path(current_user, symptom), class: "symptom-description" %>
                 </li>
               </ul>
@@ -28,44 +28,44 @@
         </div>
       </div>
       <%# <% if day.next_day %> %>
-        <div class="card" style="width: 18rem;">
+        <!-- <div class="card" style="width: 18rem;">
           <h5 class="card-title">
             On the next day, these were your symptoms:
           </h5>
           <div class="card-body">
             <h6 class="day-mdy card-subtitle mb-2 text-muted">
             </h6>
-            <p class="card-text">
+            <p class="card-text"> -->
               <%# <% day.next_day_symptoms.each do |symptom| %> %>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">
+                <!-- <ul class="list-group list-group-flush">
+                  <li class="list-group-item"> -->
                     <%# <%= link_to symptom.description, user_symptom_path(current_user, symptom) %> %>
-                  </li>
-                </ul>
+                  <!-- </li>
+                </ul> -->
               <%# <% end %> %>
-            </p>
+            <!-- </p>
           </div>
-        </div>
+        </div> -->
       <%# <% end %> %>
       <%# <% if day.two_days_later %> %>
-        <div class="card" style="width: 18rem;">
+        <!-- <div class="card" style="width: 18rem;">
           <h5 class="card-title">
             Two days later, these were your symptoms:
           </h5>
           <div class="card-body">
             <h6 class="day-mdy card-subtitle mb-2 text-muted">
             </h6>
-            <p class="card-text">
+            <p class="card-text"> -->
               <%# <% day.two_days_later_symptoms.each do |symptom| %> %>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">
+                <!-- <ul class="list-group list-group-flush">
+                  <li class="list-group-item"> -->
                     <%# <%= link_to symptom.description, user_symptom_path(current_user, symptom) %> %>
-                  </li>
-                </ul>
+                  <!-- </li>
+                </ul> -->
               <%# <% end %> %>
-            </p>
+            <!-- </p>
           </div>
-        </div>
+        </div> -->
       <%# <% end %> %>
     </div>
   <% end %>
