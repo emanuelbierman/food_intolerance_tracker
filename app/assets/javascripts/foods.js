@@ -7,26 +7,31 @@ function getFoodDays(userId, foodId) {
     dataType: 'json'
   }).done(function(response) {
     const food = new Food(response.data.attributes.name, response.data.attributes["days-count"]);
+
     const included = response.included;
     for (var i = 0; i < included.length; i++) {
       let day = new Day(included[i].attributes["month-day-year"]);
       food.days.push(day);
       for (var ii = 0; ii < included[i].attributes.symptoms.length; ii++) {
         let symptom = new Symptom(included[i].attributes.symptoms[ii].description, included[i].attributes.symptoms[ii]["days_count"]);
-        // why is it days_count here, but days-count in line 9?
+        // why is the data stored in days_count here, but in days-count in line 9?
         day.symptoms.push(symptom);
       }
     }
 
     $(".day-mdy").map(function(i) {
-      return this.innerText = `Date: ${food.days[i].monthDayYear}`
+      // return this.innerText = `Date: ${food.days[i].monthDayYear}`
     });
     // increment the button id
     $("button#js-next").data("food", foodId + 1);
     // console.log("foodId: " + foodId);
     // map these:
-    $("span#food-name");
-    $("a.symptom-description");
+    $("span#food-name").map(function() {
+      return this.innerText = `${food.name}`;
+    });
+    $("a.symptom-description").map(function(i) {
+      // return this.innerText = `${food.days[i].symptoms}`
+    });
   });
 };
 

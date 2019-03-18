@@ -1,7 +1,8 @@
 <div class="container">
   <h3>
-    <%= @food.name.split.map(&:capitalize).join(' ') %>
-    <span id="food-name"></span>
+    <span id="food-name">
+      <%# <%= @food.name.split.map(&:capitalize).join(' ') %> %>
+    </span>
     <span class="badge">
       <button id="js-next" data-user="<%= @id %>" data-food="<%= @food.id %>">next food -></button>
     </span>
