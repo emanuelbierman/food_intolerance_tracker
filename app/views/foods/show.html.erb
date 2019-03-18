@@ -7,11 +7,12 @@
       <button id="js-next" data-user="<%= @id %>" data-food="<%= @food.id %>">next food -></button>
     </span>
   </h3>
-  <% @food.days.each do |day| %>
+  <div class="days">
+    <% @food.days.each do |day| %>
     <div class="row">
-      <div class="day-<%=day.id%> card" style="width: 18rem;">
+      <div class="card" style="width: 18rem;">
         <h5 class="card-title">
-          When you ate <span id="food-name"><%= @food.name %></span>, these were your symptoms:
+          When you ate<%= @food.name %>, these were your symptoms:
         </h5>
         <div class="card-body">
           <h6 class="day-mdy card-subtitle mb-2 text-muted">
@@ -19,8 +20,8 @@
           <p class="card-text">
             <% day.symptoms.each do |symptom| %>
               <ul class="list-group list-group-flush">
-                <li class="symptom-<%=symptom.id%> list-group-item">
-                  <%= link_to symptom.description, user_symptom_path(current_user, symptom), class: "symptom-description" %>
+                <li class="list-group-item">
+                  <%= link_to symptom.description, user_symptom_path(current_user, symptom) %>
                 </li>
               </ul>
             <% end %>
@@ -68,7 +69,8 @@
         </div> -->
       <%# <% end %> %>
     </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
 
 <script type="text/javascript">

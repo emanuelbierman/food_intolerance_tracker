@@ -6,40 +6,71 @@ function getFoodDays(userId, foodId) {
     method: 'get',
     dataType: 'json'
   }).done(function(response) {
-    const food = new Food(response.data.attributes.name, response.data.attributes["days-count"]);
+    // construct objects from data
+    const food = new Food(response.data.id, response.data.attributes.name, response.data.attributes["days-count"]);
 
     const included = response.included;
     for (var i = 0; i < included.length; i++) {
       let day = new Day(included[i].id, included[i].attributes["month-day-year"]);
       food.days.push(day);
       for (var ii = 0; ii < included[i].attributes.symptoms.length; ii++) {
-        let symptom = new Symptom(included[i].attributes.symptoms[ii].description, included[i].attributes.symptoms[ii]["days_count"]);
+        let symptom = new Symptom(included[i].attributes.symptoms[ii].id, included[i].attributes.symptoms[ii].description, included[i].attributes.symptoms[ii]["days_count"]);
         // why is the data stored in days_count here, but in days-count in line 9?
         day.symptoms.push(symptom);
       }
     }
+
+    // increment the button id
+    $("button#js-next").data("food", foodId + 1);
+
+    // capitalize food name for title
+    $("span#food-title").map(function(i) {
+      return this.innerText = `${food.name[0].toUpperCase()}` + `${food.name.slice(1).toLowerCase()}`;
+    });
+
+    // clear the way for entering new days and symptoms
+    $(".days").empty();
+
+    food.days.map(day => {
+      $(".days").append(`
+        <div class="row">
+        <div class="card" style="width: 18rem;">
+        <h5 class="card-title">
+        When you ate ${food.name}, these were your symptoms:
+        </h5>
+        <div class="card-body">
+        <h6 class="day-mdy card-subtitle mb-2 text-muted">
+        Date: ${day.monthDayYear}
+        </h6>
+        <p class="card-text">
+        <ul class="day-${day.id} list-group list-group-flush">
+        </ul>
+        </p>
+      `);
+      day.symptoms.map(symptom => {
+        $(`ul.day-${day.id}`).append(`
+          <li class="list-group-item">
+          <a href="/users/1/symptoms/${symptom.id}">${symptom.description}</a>
+          </li>
+        `);
+      });
+    });
 
     $(".day-mdy").map(function(i) {
       // why is this returning undefined? check food.days array
       // return this.innerText = `Date: ${food.days[i].monthDayYear}`
     });
 
-    // increment the button id
-    $("button#js-next").data("food", foodId + 1);
-
     $("span#food-name").map(function() {
-      return this.innerText = `${food.name}`;
-    });
-    $("span#food-title").map(function(i) {
-      return this.innerText = `${food.name[0].toUpperCase()}` + `${food.name.slice(1).toLowerCase()}`;
+      // return this.innerText = `${food.name}`;
     });
 
     for (var i = 0; i < food.days.length; i++) {
       // find all symptom descriptions within the current iteration of day
-      let symptoms = $(`.day-${food.days[i].id}`).find("a.symptom-description");
-      symptoms.map(function(ii) {
-        return this.innerText = `${food.days[i].symptoms[ii].description}`
-      });
+      // let symptoms = $(`.day-${food.days[i].id}`).find("a.symptom-description");
+      // symptoms.map(function(ii) {
+        // return this.innerText = `${food.days[i].symptoms[ii].description}`
+      // });
     }
   });
 };
@@ -63,7 +94,8 @@ function getFoods(userId) {
   });
 }
 
-function Food(name, daysCount) {
+function Food(id, name, daysCount) {
+  this.id = id;
   this.name = name;
   this.daysCount = daysCount;
   this.days = [];
@@ -75,7 +107,8 @@ function Day(id, monthDayYear) {
   this.symptoms = [];
 };
 
-function Symptom(description, daysCount) {
+function Symptom(id, description, daysCount) {
+  this.id = id;
   this.description = description;
   this.daysCount = daysCount;
 }
