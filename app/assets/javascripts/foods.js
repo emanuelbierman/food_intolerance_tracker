@@ -55,23 +55,6 @@ function getFoodDays(userId, foodId) {
         `);
       });
     });
-
-    $(".day-mdy").map(function(i) {
-      // why is this returning undefined? check food.days array
-      // return this.innerText = `Date: ${food.days[i].monthDayYear}`
-    });
-
-    $("span#food-name").map(function() {
-      // return this.innerText = `${food.name}`;
-    });
-
-    for (var i = 0; i < food.days.length; i++) {
-      // find all symptom descriptions within the current iteration of day
-      // let symptoms = $(`.day-${food.days[i].id}`).find("a.symptom-description");
-      // symptoms.map(function(ii) {
-        // return this.innerText = `${food.days[i].symptoms[ii].description}`
-      // });
-    }
   });
 };
 
