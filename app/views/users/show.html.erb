@@ -36,6 +36,7 @@
       <div class="form-group">
         <%= form_for [@user, @days_food] do |f| %>
           <%= f.hidden_field :day_id, value: @day.id %>
+          <%= f.hidden_field :user_id, value: @user.id %>
           <%= f.collection_select(:food_id, @user.food_names, :id, :name, {include_blank: 'Existing food?', selected: 'Existing food?'}) %>
           <%= f.fields_for :food do |food_fields| %>
             <br><%= food_fields.text_field :name, placeholder: "Or create new food" %>
@@ -76,6 +77,7 @@
       <div class="form-group">
         <%= form_for [@user, @days_symptom] do |f| %>
           <%= f.hidden_field :day_id, value: @day.id %>
+          <%= f.hidden_field :user_id, value: @user.id %>
           <%= f.collection_select(:symptom_id, @user.symptom_descriptions, :id, :description, {include_blank: 'Existing symptom?', selected: 'Existing symptom?'}) %>
           <%= f.fields_for :symptom do |symptom_fields| %>
             <br><%= symptom_fields.text_field :description, placeholder: "Or create new symptom" %>
@@ -88,3 +90,31 @@
     </li>
   </ul>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+$(function() {
+  $('form').submit(function(event) {
+    event.preventDefault();
+    let data = $(this).serialize();
+
+    // distinguish between two forms on the page
+    if ($(this).attr("class") === "new_days_food") {
+      let user_id = $("input#days_food_user_id", this).value;
+      let url = `/users/${user_id}/days_foods`;
+    } else if ($(this).attr("class") === "new_days_symptom") {
+      let user_id = $("input#days_symptom_user_id", this).value;
+      let url = `/users/${user_id}/days_symptoms`;
+    }
+
+    let posting = $.ajax({
+      url: url,
+      method: 'POST',
+      data: data
+    });
+
+    posting.done(function(data) {
+      // append to DOM
+    })
+  })
+})
+</script>
