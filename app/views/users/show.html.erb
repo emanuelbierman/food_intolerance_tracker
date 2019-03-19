@@ -15,7 +15,7 @@
             <th scope="col">Serving</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="days_foods">
           <% @day.days_foods.each do |days_food| %>
           <tr>
             <% if days_food.valid? %>
@@ -56,7 +56,7 @@
             <th scope="col">Frequency</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="days_symptoms">
           <% @day.days_symptoms.each do |days_symptom| %>
           <tr>
             <% if days_symptom.valid? %>
@@ -98,12 +98,17 @@ $(function() {
     let data = $(this).serialize();
 
     // distinguish between two forms on the page
+    let form = '';
+    let user_id = '';
+    let url = '';
     if ($(this).attr("class") === "new_days_food") {
-      let user_id = $("input#days_food_user_id", this).value;
-      let url = `/users/${user_id}/days_foods`;
+      form = "days_food";
+      user_id = $("input#days_food_user_id", this)[0].value;
+      url = `/users/${user_id}/days_foods`;
     } else if ($(this).attr("class") === "new_days_symptom") {
-      let user_id = $("input#days_symptom_user_id", this).value;
-      let url = `/users/${user_id}/days_symptoms`;
+      form = "days_symptom";
+      user_id = $("input#days_symptom_user_id", this)[0].value;
+      url = `/users/${user_id}/days_symptoms`;
     }
 
     let posting = $.ajax({
@@ -112,9 +117,10 @@ $(function() {
       data: data
     });
 
-    posting.done(function(data) {
+    posting.done( data => {
       // append to DOM
-    })
-  })
-})
+      
+    });
+  });
+});
 </script>
