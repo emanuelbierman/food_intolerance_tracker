@@ -119,7 +119,22 @@ $(function() {
 
     posting.done( data => {
       // append to DOM
-      
+      let userId = data.data.attributes.day.user_id;
+      let foodId = data.data.attributes.food.id;
+      let foodName = data.data.attributes.food.name;
+      let serving = data.data.attributes.serving;
+      let comments = data.data.attributes.comments;
+
+      let newDaysFoodHTML = `
+        <tr><th scope="row">
+        <a href="/users/${userId}/foods/${foodId}">${foodName}</a>
+        </th><td>
+        ${serving} / delete link
+        </td><th scope="row">
+        ${comments}
+        </th></tr>
+      `;
+      $("tbody.days_foods").append(newDaysFoodHTML);
     });
   });
 });

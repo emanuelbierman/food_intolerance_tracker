@@ -3,7 +3,8 @@ class DaysFoodsController < ApplicationController
   def create
     @days_food = DaysFood.new(days_food_params)
     if @days_food.save
-      redirect_to user_path(current_user), notice: "You added #{@food.name}."
+      # redirect_to user_path(current_user), notice: "You added #{@food.name}."
+      render json: @days_food, status: 201
     else
       flash[:alert] = []
       redirect_to user_path(current_user), alert: @days_food.errors.full_messages
