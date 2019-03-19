@@ -66,15 +66,25 @@ function getFoods(userId) {
     method: 'get',
     dataType: 'json'
   }).done(function(response) {
-    foods = response.data.map(function(element) {
-      return new Food(element.attributes.name, element.attributes["days-count"]);
+    let foods = response.data.map(function(element) {
+      return new Food(element.attributes.id, element.attributes.name, element.attributes["days-count"]);
     });
-    $("a.food-name").map(function(index) {
-      return this.innerHTML = foods[index].name
-    })
-    $("span.food-count").append(function(index) {
-      return foods[index].daysCount;
-    });
+
+    let foodsString = foods.map(function(food) {
+      return `
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="/users/1/foods/${food.id}">${food.name}</a>
+        <span class="food-count badge badge-primary badge-pill">${food.daysCount}</span>
+        </li>
+      `;
+    }).join('');
+    $("ul.foods").append(foodsString)
+    // $("a.food-name").map(function(index) {
+    //   return this.innerHTML = foods[index].name
+    // })
+    // $("span.food-count").append(function(index) {
+    //   return foods[index].daysCount;
+    // });
   });
 }
 
