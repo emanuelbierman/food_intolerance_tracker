@@ -21,7 +21,8 @@ function getFoodDays(userId, foodId) {
     }
 
     // increment the button id
-    $("button#js-next").data("food", foodId + 1);
+    foodId = foodId + 1;
+    $("button#js-next").attr("food", foodId);
 
     // capitalize food name for title
     $("span#food-title").map(function(i) {
