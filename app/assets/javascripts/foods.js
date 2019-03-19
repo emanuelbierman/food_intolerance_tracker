@@ -25,8 +25,8 @@ function getFoodDays(userId, foodId) {
     $("button#js-next").attr("food", foodId);
 
     // capitalize food name for title
-    $("span#food-title").map(function(i) {
-      return this.innerText = `${food.name[0].toUpperCase()}` + `${food.name.slice(1).toLowerCase()}`;
+    $("span#food-title").map(function() {
+      return this.innerText = food.capitalizedName();
     });
 
     // clear the way for entering new days and symptoms
@@ -94,6 +94,10 @@ function Food(id, name, daysCount) {
   this.daysCount = daysCount;
   this.days = [];
 };
+
+Food.prototype.capitalizedName = function() {
+  return `${this.name[0].toUpperCase()}` + `${this.name.slice(1).toLowerCase()}`
+}
 
 function Day(id, monthDayYear) {
   this.id = id;
