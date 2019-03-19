@@ -3,7 +3,8 @@ class DaysSymptomsController < ApplicationController
   def create
     @days_symptom = DaysSymptom.new(days_symptom_params)
     if @days_symptom.save
-      redirect_to user_path(current_user), notice: "You added #{@symptom.description}."
+      # redirect_to user_path(current_user), notice: "You added #{@symptom.description}."
+      render json: @days_symptom, status: 201
     else
       flash[:alert] = []
       redirect_to user_path(current_user), alert: @days_symptom.errors.full_messages

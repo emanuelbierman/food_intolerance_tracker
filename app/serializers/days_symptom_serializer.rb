@@ -1,3 +1,3 @@
-# class DaysSymptomSerializer < ActiveModel::Serializer
-#   attributes :id, :servings, :comments
-# end
+class DaysSymptomSerializer < ActiveModel::Serializer
+  attributes :id, :frequency, :comments, :symptom, :day
+end
