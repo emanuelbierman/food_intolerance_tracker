@@ -1,5 +1,5 @@
 
-function getFoodDays(userId, foodId) {
+function getFood(userId, foodId) {
   $.ajax({
     // need to grab this user id param
     url: `/users/${userId}/foods/${foodId}`,
@@ -48,6 +48,7 @@ function getFoodDays(userId, foodId) {
         </ul>
         </p>
       `);
+      // need to grab the user id param
       day.symptoms.map(symptom => {
         $(`ul.day-${day.id}`).append(`
           <li class="list-group-item">
@@ -61,7 +62,6 @@ function getFoodDays(userId, foodId) {
 
 function getFoods(userId) {
   $.ajax({
-    // need to grab this user id param
     url: `/users/${userId}/foods`,
     method: 'get',
     dataType: 'json'
@@ -70,6 +70,7 @@ function getFoods(userId) {
       return new Food(element.attributes.id, element.attributes.name, element.attributes["days-count"]);
     });
 
+    // need to grab the user id param
     let foodsString = foods.map(function(food) {
       return `
         <li class="list-group-item d-flex justify-content-between align-items-center">

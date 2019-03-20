@@ -12,7 +12,7 @@
 $(function() {
   const user_id = $("button#js-next").data("user");
   let food_id = $("button#js-next").data("food");
-  getFoodDays(user_id, food_id);
+  getFood(user_id, food_id);
   // inside getFoodDays, the value of food.id in the button gets incremented
   $("button#js-next").on('click', function() {
     food_id += 1;
