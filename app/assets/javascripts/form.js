@@ -1,7 +1,7 @@
 $(function() {
   $('form').submit(function(event) {
     event.preventDefault();
-    let data = $(this).serialize();
+    const data = $(this).serialize();
 
     // distinguish between two forms on the page
     let user_id = '';
@@ -14,21 +14,16 @@ $(function() {
       url = `/users/${user_id}/days_symptoms`;
     }
 
-    let posting = $.ajax({
-      url: url,
-      method: 'POST',
-      data: data
-    });
-
+    const posting = $.post(url, data);
     posting.done( data => {
       // distinguish between two forms on the page
-      let userId = data.data.attributes.day.user_id;
-      let comments = data.data.attributes.comments;
+      const userId = data.data.attributes.day.user_id;
+      const comments = data.data.attributes.comments;
       if (data.data.type === "days-foods") {
-        let foodId = data.data.attributes.food.id;
-        let foodName = data.data.attributes.food.name;
-        let serving = data.data.attributes.serving;
-        let newDaysFoodHTML = `
+        const foodId = data.data.attributes.food.id;
+        const foodName = data.data.attributes.food.name;
+        const serving = data.data.attributes.serving;
+        const newDaysFoodHTML = `
           <tr><th scope="row">
           <a href="/users/${userId}/foods/${foodId}">${foodName}</a>
           </th><td>
@@ -39,10 +34,10 @@ $(function() {
         `;
         $("tbody.days_foods").append(newDaysFoodHTML);
       } else if (data.data.type === "days-symptoms") {
-        let symptomId = data.data.attributes.symptom.id;
-        let symptomDescription = data.data.attributes.symptom.description;
-        let frequency = data.data.attributes.frequency;
-        let newDaysSymptomHTML = `
+        const symptomId = data.data.attributes.symptom.id;
+        const symptomDescription = data.data.attributes.symptom.description;
+        const frequency = data.data.attributes.frequency;
+        const newDaysSymptomHTML = `
           <tr><th scope="row">
           <a href="/users/${userId}/symptoms/${symptomId}">${symptomDescription}</a>
           </th><td>
@@ -53,7 +48,6 @@ $(function() {
         `;
         $("tbody.days_symptoms").append(newDaysSymptomHTML);
       }
-
     });
   });
 });

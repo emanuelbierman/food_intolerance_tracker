@@ -1,11 +1,6 @@
 
 function getFood(userId, foodId) {
-  $.ajax({
-    // need to grab this user id param
-    url: `/users/${userId}/foods/${foodId}`,
-    method: 'get',
-    dataType: 'json'
-  }).done(function(response) {
+  $.getJSON(`/users/${userId}/foods/${foodId}`, function(response) {
     // construct objects from data
     const food = new Food(response.data.id, response.data.attributes.name, response.data.attributes["days-count"]);
 
@@ -21,13 +16,10 @@ function getFood(userId, foodId) {
     }
 
     // increment the button id
-    foodId = foodId + 1;
-    $("button#js-next").attr("food", foodId);
+    $("button#js-next").attr("food", foodId + 1);
 
     // capitalize food name for title
-    $("span#food-title").map(function() {
-      return this.innerText = food.capitalizedName();
-    });
+    $("span#food-title").map((i,e) => e.innerText = food.capitalizedName());
 
     // clear the way for entering new days and symptoms
     $(".days").empty();
@@ -48,7 +40,6 @@ function getFood(userId, foodId) {
         </ul>
         </p>
       `);
-      // need to grab the user id param
       day.symptoms.map(symptom => {
         $(`ul.day-${day.id}`).append(`
           <li class="list-group-item">
@@ -61,17 +52,12 @@ function getFood(userId, foodId) {
 };
 
 function getFoods(userId) {
-  $.ajax({
-    url: `/users/${userId}/foods`,
-    method: 'get',
-    dataType: 'json'
-  }).done(function(response) {
-    let foods = response.data.map(function(element) {
+  $.getJSON(`/users/${userId}/foods`, function(response) {
+    const foods = response.data.map(function(element) {
       return new Food(element.attributes.id, element.attributes.name, element.attributes["days-count"]);
     });
 
-    // need to grab the user id param
-    let foodsString = foods.map(function(food) {
+    const foodsString = foods.map(function(food) {
       return `
         <li class="list-group-item d-flex justify-content-between align-items-center">
         <a href="/users/${userId}/foods/${food.id}">${food.name}</a>
@@ -79,15 +65,9 @@ function getFoods(userId) {
         </li>
       `;
     }).join('');
-    $("ul.foods").append(foodsString)
-    // $("a.food-name").map(function(index) {
-    //   return this.innerHTML = foods[index].name
-    // })
-    // $("span.food-count").append(function(index) {
-    //   return foods[index].daysCount;
-    // });
+    $("ul.foods").append(foodsString);
   });
-}
+};
 
 function Food(id, name, daysCount) {
   this.id = id;
