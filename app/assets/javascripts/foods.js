@@ -52,7 +52,7 @@ function getFood(userId, foodId) {
       day.symptoms.map(symptom => {
         $(`ul.day-${day.id}`).append(`
           <li class="list-group-item">
-          <a href="/users/1/symptoms/${symptom.id}">${symptom.description}</a>
+          <a href="/users/${userId}/symptoms/${symptom.id}">${symptom.description}</a>
           </li>
         `);
       });
@@ -74,7 +74,7 @@ function getFoods(userId) {
     let foodsString = foods.map(function(food) {
       return `
         <li class="list-group-item d-flex justify-content-between align-items-center">
-        <a href="/users/1/foods/${food.id}">${food.name}</a>
+        <a href="/users/${userId}/foods/${food.id}">${food.name}</a>
         <span class="food-count badge badge-primary badge-pill">${food.daysCount}</span>
         </li>
       `;
