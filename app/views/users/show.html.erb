@@ -1,7 +1,7 @@
 <!-- display/edit username -->
 <h3>Welcome <%= @user.username %>!</h3>
 
-<div class="card" style="width: 18rem;">
+<div class="card" style="width: auto;">
   <div class="card-header">
     <%= "Today: " + @day.day_of_week + ", " + @day.month_day_year %>
   </div>
@@ -11,23 +11,28 @@
       <table class="table table-sm">
         <thead>
           <tr>
-            <th scope="col">Food</th>
-            <th scope="col">Serving</th>
+            <th class="col">Food</th>
+            <th class="col">Serving</th>
+            <th class="col">Comments</th>
+            <th class="col">Delete</th>
           </tr>
         </thead>
         <tbody class="days_foods">
           <% @day.days_foods.each do |days_food| %>
           <tr>
             <% if days_food.valid? %>
-              <th scope="row">
-                <%= link_to days_food.food.name, user_food_path(@user, days_food.food) %>
-              </th>
               <td>
-                <%= days_food.serving %>  /<%= link_to("delete", "/users/#{@user.id}/days_foods/#{days_food.id}", method: :delete) %>
+                <%= link_to days_food.food.name, user_food_path(@user, days_food.food) %>
               </td>
-              <th scope="row">
+              <td>
+                <%= days_food.serving %>
+              </td>
+              <td>
                 <%= days_food.comments %>
-              </th>
+              </td>
+              <td>
+                <%= link_to("delete", "/users/#{@user.id}/days_foods/#{days_food.id}", method: :delete) %>
+              </td>
             <% end %>
           </tr>
           <% end %>
@@ -39,7 +44,7 @@
           <%= f.hidden_field :user_id, value: @user.id %>
           <%= f.collection_select(:food_id, @user.food_names, :id, :name, {include_blank: 'Existing food?', selected: 'Existing food?'}) %>
           <%= f.fields_for :food do |food_fields| %>
-            <br><%= food_fields.text_field :name, placeholder: "Or create new food" %>
+            <%= food_fields.text_field :name, placeholder: "Or create new food" %>
           <% end %>
           <%= f.number_field :serving, placeholder: "Servings (required)" %>
           <%= f.text_field :comments, value: @days_food.comments, placeholder: "Comments?"  %>
@@ -52,23 +57,28 @@
       <table class="table table-sm">
         <thead>
           <tr>
-            <th scope="col">Symptom</th>
-            <th scope="col">Frequency</th>
+            <th class="col">Symptom</th>
+            <th class="col">Frequency</th>
+            <th class="col">Comments</th>
+            <th class="col">Delete</th>
           </tr>
         </thead>
         <tbody class="days_symptoms">
           <% @day.days_symptoms.each do |days_symptom| %>
           <tr>
             <% if days_symptom.valid? %>
-              <th scope="row">
-                <%= link_to days_symptom.symptom.description, user_symptom_path(@user, days_symptom.symptom) %>
-              </th>
               <td>
-                <%= days_symptom.frequency %>  /<%= link_to("delete", "/users/#{@user.id}/days_symptoms/#{days_symptom.id}", method: :delete) %>
+                <%= link_to days_symptom.symptom.description, user_symptom_path(@user, days_symptom.symptom) %>
               </td>
-              <th scope="row">
+              <td>
+                <%= days_symptom.frequency %>
+              </td>
+              <td>
                 <%= days_symptom.comments %>
-              </th>
+              </td>
+              <td>
+                <%= link_to("delete", "/users/#{@user.id}/days_symptoms/#{days_symptom.id}", method: :delete) %>
+              </td>
             <% end %>
           </tr>
           <% end %>
@@ -80,7 +90,7 @@
           <%= f.hidden_field :user_id, value: @user.id %>
           <%= f.collection_select(:symptom_id, @user.symptom_descriptions, :id, :description, {include_blank: 'Existing symptom?', selected: 'Existing symptom?'}) %>
           <%= f.fields_for :symptom do |symptom_fields| %>
-            <br><%= symptom_fields.text_field :description, placeholder: "Or create new symptom" %>
+            <%= symptom_fields.text_field :description, placeholder: "Or create new symptom" %>
           <% end %>
           <%= f.number_field :frequency, placeholder: "Frequency (required)" %>
           <%= f.text_field :comments, value: @days_symptom.comments, placeholder: "Comments for today?"  %>

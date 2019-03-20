@@ -24,13 +24,12 @@ $(function() {
         const foodName = data.data.attributes.food.name;
         const serving = data.data.attributes.serving;
         const newDaysFoodHTML = `
-          <tr><th scope="row">
-          <a href="/users/${userId}/foods/${foodId}">${foodName}</a>
-          </th><td>
-          ${serving} / delete link
-          </td><th scope="row">
-          ${comments}
-          </th></tr>
+          <tr><td>
+          <a href="/users/${userId}/foods/${foodId}">${foodName}</a></td>
+          <td>${serving}</td>
+          <td>${comments}</td>
+          <td>delete</td>
+          </tr>
         `;
         $("tbody.days_foods").append(newDaysFoodHTML);
       } else if (data.data.type === "days-symptoms") {
@@ -38,13 +37,12 @@ $(function() {
         const symptomDescription = data.data.attributes.symptom.description;
         const frequency = data.data.attributes.frequency;
         const newDaysSymptomHTML = `
-          <tr><th scope="row">
-          <a href="/users/${userId}/symptoms/${symptomId}">${symptomDescription}</a>
-          </th><td>
-          ${frequency} / delete link
-          </td><th scope="row">
-          ${comments}
-          </th></tr>
+          <tr><td>
+          <a href="/users/${userId}/symptoms/${symptomId}">${symptomDescription}</a></td>
+          <td>${frequency}</td>
+          <td>${comments}</td>
+          <td>delete</td>
+          </tr>
         `;
         $("tbody.days_symptoms").append(newDaysSymptomHTML);
       }
