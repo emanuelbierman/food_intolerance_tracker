@@ -28,10 +28,11 @@ $(function() {
           <a href="/users/${userId}/foods/${foodId}">${foodName}</a></td>
           <td>${serving}</td>
           <td>${comments}</td>
-          <td>delete</td>
+          <td><a href="/users/${userId}/days_foods/${foodId}" class="delete" rel="no-follow" data-method="delete">delete</a></td>
           </tr>
         `;
         $("tbody.days_foods").append(newDaysFoodHTML);
+        // need to also add event listeners for each of the newly added foods delete links
       } else if (data.data.type === "days-symptoms") {
         const symptomId = data.data.attributes.symptom.id;
         const symptomDescription = data.data.attributes.symptom.description;
@@ -41,15 +42,29 @@ $(function() {
           <a href="/users/${userId}/symptoms/${symptomId}">${symptomDescription}</a></td>
           <td>${frequency}</td>
           <td>${comments}</td>
-          <td>delete</td>
+          <td><a href="/users/${userId}/days_symptoms/${symptomId}" class="delete" rel="no-follow" data-method="delete">delete</a></td>
           </tr>
         `;
         $("tbody.days_symptoms").append(newDaysSymptomHTML);
+        // need to also add event listeners for each of the newly added symptom delete links
       }
       // clear form values after entering
       $('form')[0].reset();
       // remove disabled attribute
       $('input.submit').removeAttr("disabled");
     });
+  });
+
+  $('a.delete').click(function(event) {
+    event.preventDefault();
+    const url = this.href;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {"_method":"delete"},
+      dataType: 'json'
+    });
+    // how to delete the element?
+    this.remove();
   });
 });

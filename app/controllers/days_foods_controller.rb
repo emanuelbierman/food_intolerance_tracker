@@ -15,7 +15,8 @@ class DaysFoodsController < ApplicationController
     @days_food = DaysFood.find_by(id: params[:id])
     @food = @days_food.food
     @days_food.destroy
-    redirect_to user_path(current_user), notice: "You removed #{@food.name}."
+    render json: @days_food, status: 201
+    # redirect_to user_path(current_user), notice: "You removed #{@food.name}."
   end
 
 private

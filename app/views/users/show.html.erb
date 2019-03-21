@@ -31,7 +31,7 @@
                 <%= days_food.comments %>
               </td>
               <td>
-                <%= link_to("delete", "/users/#{@user.id}/days_foods/#{days_food.id}", method: :delete) %>
+                <%= link_to("delete", "/users/#{@user.id}/days_foods/#{days_food.id}", method: :delete, class: 'delete') %>
               </td>
             <% end %>
           </tr>
@@ -77,7 +77,7 @@
                 <%= days_symptom.comments %>
               </td>
               <td>
-                <%= link_to("delete", "/users/#{@user.id}/days_symptoms/#{days_symptom.id}", method: :delete) %>
+                <%= link_to("delete", "/users/#{@user.id}/days_symptoms/#{days_symptom.id}", method: :delete, class: 'delete') %>
               </td>
             <% end %>
           </tr>
