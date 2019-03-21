@@ -48,7 +48,7 @@
           <% end %>
           <%= f.number_field :serving, placeholder: "Servings (required)" %>
           <%= f.text_field :comments, value: @days_food.comments, placeholder: "Comments?"  %>
-          <%= f.submit "Submit", class: "btn btn-primary" %>
+          <%= f.submit "Submit", class: "submit btn btn-primary" %>
         <% end %>
       </div>
     </li>
@@ -94,7 +94,7 @@
           <% end %>
           <%= f.number_field :frequency, placeholder: "Frequency (required)" %>
           <%= f.text_field :comments, value: @days_symptom.comments, placeholder: "Comments for today?"  %>
-          <%= f.submit "Submit", class: "btn btn-primary" %>
+          <%= f.submit "Submit", class: "submit btn btn-primary" %>
         <% end %>
       </div>
     </li>

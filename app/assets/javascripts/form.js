@@ -46,6 +46,10 @@ $(function() {
         `;
         $("tbody.days_symptoms").append(newDaysSymptomHTML);
       }
+      // clear form values after entering
+      $('form')[0].reset();
+      // remove disabled attribute
+      $('input.submit').removeAttr("disabled");
     });
   });
 });
